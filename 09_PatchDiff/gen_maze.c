@@ -4,14 +4,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 enum {
-    ARGC_MAZE_SIZE = 1,
+    ARGC_FORMAT_SYMBOLS = 1,
+    ARGC_MAZE_SIZE = 2,
+    ARGC_COUNT = 3,
 };
 
 
 int main(int argc, char *argv[]) {
-    if (argc != 2) {
+    if (argc != ARGC_COUNT) {
         printf("Usage is %s maze_size\n", argv[0]);
         exit(1);
     }
@@ -23,6 +26,13 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+    if (strlen(argv[ARGC_FORMAT_SYMBOLS]) != 2) {
+        printf("Format symbols string must include only two chars. First is path, second is wall\n");
+        exit(1);
+    }
+    char path = argv[ARGC_FORMAT_SYMBOLS][0];
+    char wall = argv[ARGC_FORMAT_SYMBOLS][1];
+
     char **maze_array = calloc(sizeof(char *), (maze_size * 2) + 1);
     for (int i = 0; i < (maze_size * 2) + 1; ++i) {
         maze_array[i] = calloc(sizeof(char), (maze_size * 2) + 2);
@@ -31,7 +41,7 @@ int main(int argc, char *argv[]) {
 
     for (int i = 0; i < (maze_size * 2) + 1; ++i) {
         for (int j = 0; j < (maze_size * 2) + 1; ++j) {
-            maze_array[i][j] = i % 2 == 1 && j % 2 == 1 ? '.' : '#';
+            maze_array[i][j] = i % 2 == 1 && j % 2 == 1 ? path : wall;
         }
     }
 
@@ -43,15 +53,15 @@ int main(int argc, char *argv[]) {
                 if (j == maze_size * 2 - 1) {
                     continue;
                 }
-                maze_array[i][j + 1] = '.';
+                maze_array[i][j + 1] = path;
             } else if (j == maze_size * 2 - 1) {
-                maze_array[i - 1][j] = '.';
+                maze_array[i - 1][j] = path;
             } else {
                 int direction = rand() % 2;
                 if (direction == 0) {
-                    maze_array[i][j + 1] = '.';
+                    maze_array[i][j + 1] = path;
                 } else {
-                    maze_array[i - 1][j] = '.';
+                    maze_array[i - 1][j] = path;
                 }
             }
         }
