@@ -1,0 +1,47 @@
+From 5472ccb9a779fff1280b3c01dc97577c49aaab86 Mon Sep 17 00:00:00 2001
+From: Veniamin Arefev <veniamin.arefev@mail.ru>
+Date: Tue, 21 Nov 2023 03:21:34 +0300
+Subject: [PATCH 3/3] Ninth task part 3
+
+---
+ 09_PatchDiff/gen_maze.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/09_PatchDiff/gen_maze.c b/09_PatchDiff/gen_maze.c
+index 3148590..0680fe7 100644
+--- a/09_PatchDiff/gen_maze.c
++++ b/09_PatchDiff/gen_maze.c
+@@ -7,9 +7,10 @@
+ #include <string.h>
+ 
+ enum {
+-    ARGC_FORMAT_SYMBOLS = 1,
+-    ARGC_MAZE_SIZE = 2,
+-    ARGC_COUNT = 3,
++    ARGC_SEED = 1,
++    ARGC_FORMAT_SYMBOLS = 2,
++    ARGC_MAZE_SIZE = 3,
++    ARGC_COUNT = 4,
+ };
+ 
+ 
+@@ -38,13 +39,15 @@ int main(int argc, char *argv[]) {
+         maze_array[i] = calloc(sizeof(char), (maze_size * 2) + 2);
+     }
+ 
+-
+     for (int i = 0; i < (maze_size * 2) + 1; ++i) {
+         for (int j = 0; j < (maze_size * 2) + 1; ++j) {
+             maze_array[i][j] = i % 2 == 1 && j % 2 == 1 ? path : wall;
+         }
+     }
+ 
++    int seed = atoi(argv[ARGC_SEED]);
++    srand(seed);
++
+ //    generate maze_array
+ 
+     for (int i = 1; i < (maze_size * 2); i += 2) {
+-- 
+2.34.1
+

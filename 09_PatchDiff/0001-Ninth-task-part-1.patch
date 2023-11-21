@@ -1,0 +1,41 @@
+From 0f78e66d6ac1361c1ac2c2beba64342ab45db020 Mon Sep 17 00:00:00 2001
+From: Veniamin Arefev <veniamin.arefev@mail.ru>
+Date: Tue, 21 Nov 2023 03:14:24 +0300
+Subject: [PATCH 1/3] Ninth task part 1
+
+---
+ 09_PatchDiff/gen_maze.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/09_PatchDiff/gen_maze.c b/09_PatchDiff/gen_maze.c
+index 71b95dc..b2e47e4 100644
+--- a/09_PatchDiff/gen_maze.c
++++ b/09_PatchDiff/gen_maze.c
+@@ -5,9 +5,23 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ 
++enum {
++    ARGC_MAZE_SIZE = 1,
++};
++
+ 
+ int main(int argc, char *argv[]) {
+-    int maze_size = 6;
++    if (argc != 2) {
++        printf("Usage is %s maze_size\n", argv[0]);
++        exit(1);
++    }
++
++    int maze_size = atoi(argv[ARGC_MAZE_SIZE]);
++
++    if (maze_size <= 0) {
++        printf("Maze size must be positive value\n");
++        exit(1);
++    }
+ 
+     char **maze_array = calloc(sizeof(char *), (maze_size * 2) + 1);
+     for (int i = 0; i < (maze_size * 2) + 1; ++i) {
+-- 
+2.34.1
+
