@@ -5,9 +5,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+enum {
+    ARGC_MAZE_SIZE = 1,
+};
+
 
 int main(int argc, char *argv[]) {
-    int maze_size = 6;
+    if (argc != 2) {
+        printf("Usage is %s maze_size\n", argv[0]);
+        exit(1);
+    }
+
+    int maze_size = atoi(argv[ARGC_MAZE_SIZE]);
+
+    if (maze_size <= 0) {
+        printf("Maze size must be positive value\n");
+        exit(1);
+    }
 
     char **maze_array = calloc(sizeof(char *), (maze_size * 2) + 1);
     for (int i = 0; i < (maze_size * 2) + 1; ++i) {
