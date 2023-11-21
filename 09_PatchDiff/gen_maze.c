@@ -7,9 +7,10 @@
 #include <string.h>
 
 enum {
-    ARGC_FORMAT_SYMBOLS = 1,
-    ARGC_MAZE_SIZE = 2,
-    ARGC_COUNT = 3,
+    ARGC_SEED = 1,
+    ARGC_FORMAT_SYMBOLS = 2,
+    ARGC_MAZE_SIZE = 3,
+    ARGC_COUNT = 4,
 };
 
 
@@ -38,12 +39,14 @@ int main(int argc, char *argv[]) {
         maze_array[i] = calloc(sizeof(char), (maze_size * 2) + 2);
     }
 
-
     for (int i = 0; i < (maze_size * 2) + 1; ++i) {
         for (int j = 0; j < (maze_size * 2) + 1; ++j) {
             maze_array[i][j] = i % 2 == 1 && j % 2 == 1 ? path : wall;
         }
     }
+
+    int seed = atoi(argv[ARGC_SEED]);
+    srand(seed);
 
 //    generate maze_array
 
